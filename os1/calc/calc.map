@@ -1,0 +1,50 @@
+text size :   2703(0x00A8F)
+data size :     64(0x00040)
+bss  size :      0(0x00000)
+
+0x00000000 : (.text)
+0x00000024 : (.text)
+0x00000024 : _HariMain
+0x000000B7 : _skipspace
+0x000000CC : _getnum
+0x00000498 : _api_end
+0x00000498 : (.text)
+0x0000049F : _api_openwin
+0x0000049F : (.text)
+0x000004C1 : _api_putstrwin
+0x000004C1 : (.text)
+0x000004E9 : __alloca
+0x000004E9 : (.text)
+0x000004F1 : (.text)
+0x000004F1 : _HariStartup
+0x000004FA : _sprintf
+0x000004FA : (.text)
+0x0000050E : _strtol
+0x0000050E : (.text)
+0x000005EA : (.text)
+0x00000626 : _strtoul0
+0x000006F9 : (.text)
+0x00000721 : _vsprintf
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00001000 : (.data)
+0x0000101C : (.data)
+0x0000101C : _errno
+0x00001020 : (.data)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)

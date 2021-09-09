@@ -1,0 +1,52 @@
+text size :   1440(0x005A0)
+data size : 175696(0x2AE50)
+bss  size :      0(0x00000)
+
+0x00000024 : (.text)
+0x00000024 : _HariMain
+0x00000395 : _cons_putchar
+0x0000044E : _cons_newline
+0x000004E0 : _api_end
+0x000004E0 : (.text)
+0x000004E7 : _api_openwin
+0x000004E7 : (.text)
+0x00000509 : _api_putstrwin
+0x00000509 : (.text)
+0x00000531 : _api_boxfilwin
+0x00000531 : (.text)
+0x00000559 : _api_refreshwin
+0x00000559 : (.text)
+0x0000057B : _api_getkey
+0x0000057B : (.text)
+0x00000587 : _api_fopenEx
+0x00000587 : (.text)
+0x00000599 : _api_fcloseEx
+0x00000599 : (.text)
+0x000005A5 : _api_fwrite
+0x000005A5 : (.text)
+0x000005BB : (.text)
+0x000005BB : _HariStartup
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x0002D000 : (.data)
+0x0002D118 : _padinfo
+0x0002D130 : _winbuf
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)

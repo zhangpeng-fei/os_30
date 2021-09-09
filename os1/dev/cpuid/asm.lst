@@ -1,0 +1,34 @@
+     1 00000000                                 ; naskfunc
+     2 00000000                                 ; TAB=4
+     3 00000000                                 
+     4 00000000                                 [FORMAT "WCOFF"]				; オブジェクトファイルを作るモード	
+     5 00000000                                 [INSTRSET "i486p"]				; 486の命令まで使いたいという記述
+     6 00000000                                 [BITS 32]						; 32ビットモード用の機械語を作らせる
+     7 00000000                                 [FILE "asm.nas"]			; ソースファイル名情報
+     8 00000000                                 
+     9 00000000                                 		GLOBAL	_asm_rdtsc
+    10 00000000                                 		GLOBAL	_asm_cpuid
+    11 00000000                                 
+    12                                          [SECTION .text]
+    13 00000000                                 
+    14 00000000                                 _asm_rdtsc:	; void asm_rdtsc(int *high, int *low);
+    15 00000000 60                              		PUSHAD
+    16 00000001 8B 6C 24 24                     		MOV		EBP,[ESP+36]
+    17 00000005 0F 31                           		DB		0x0F, 0x31			; RDTSC
+    18 00000007 89 55 00                        		MOV		[EBP],EDX			;
+    19 0000000A 89 45 04                        		MOV		[EBP+4],EAX			;
+    20 0000000D 61                              		POPAD
+    21 0000000E C3                              		RET
+    22 0000000F                                 
+    23 0000000F                                 _asm_cpuid:	; void asm_cpuid(int id_eax, int id_ecx, int *eax, int *ebx, int *ecx, int *edx);
+    24 0000000F 60                              		PUSHAD
+    25 00000010 8B 44 24 24                     		MOV		EAX,[ESP+36]		; id_eax
+    26 00000014 8B 4C 24 28                     		MOV		ECX,[ESP+40]		; id_ecx
+    27 00000018 8B 6C 24 2C                     		MOV		EBP,[ESP+44]
+    28 0000001C 0F A2                           		DB		0x0F, 0xA2			; CPUID
+    29 0000001E 89 45 00                        		MOV		[EBP],EAX			;
+    30 00000021 89 5D 04                        		MOV		[EBP+4],EBX			;
+    31 00000024 89 4D 08                        		MOV		[EBP+8],ECX			;
+    32 00000027 89 55 0C                        		MOV		[EBP+12],EDX		;
+    33 0000002A 61                              		POPAD
+    34 0000002B C3                              		RET

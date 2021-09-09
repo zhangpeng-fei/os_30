@@ -1,0 +1,33 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [BITS 32]
+     4 00000000                                 [FILE "api031.nas"]
+     5 00000000                                 
+     6 00000000                                 		GLOBAL	_api_bitbltEx
+     7 00000000                                 
+     8                                          [SECTION .text]
+     9 00000000                                 
+    10 00000000                                 _api_bitbltEx:	; int api_bitbltEx(int win, short *buf, int x, int y, int sx, int sy, int xsize, int ysize, int width);
+    11 00000000 57                              		PUSH	EDI
+    12 00000001 56                              		PUSH	ESI
+    13 00000002 55                              		PUSH	EBP
+    14 00000003 53                              		PUSH	EBX
+    15 00000004 BA 0000001F                     		MOV		EDX,31
+    16 00000009 8B 5C 24 14                     		MOV		EBX,[ESP+20]	; win
+    17 0000000D 8B 44 24 18                     		MOV		EAX,[ESP+24]	; buf
+    18 00000011 8B 4C 24 1C                     		MOV		ECX,[ESP+28]	; x
+    19 00000015 C1 E1 10                        		SHL		ECX,16
+    20 00000018 03 4C 24 20                     		ADD		ECX,[ESP+32]	; y
+    21 0000001C 8B 74 24 24                     		MOV		ESI,[ESP+36]	; sx
+    22 00000020 C1 E6 10                        		SHL		ESI,16
+    23 00000023 03 74 24 28                     		ADD		ESI,[ESP+40]	; sy
+    24 00000027 8B 7C 24 2C                     		MOV		EDI,[ESP+44]	; xsize
+    25 0000002B C1 E7 10                        		SHL		EDI,16
+    26 0000002E 03 7C 24 30                     		ADD		EDI,[ESP+48]	; ysize
+    27 00000032 8B 6C 24 34                     		MOV		EBP,[ESP+52]	; width
+    28 00000036 CD 40                           		INT		0x40
+    29 00000038 5B                              		POP		EBX
+    30 00000039 5D                              		POP		EBP
+    31 0000003A 5E                              		POP		ESI
+    32 0000003B 5F                              		POP		EDI
+    33 0000003C C3                              		RET

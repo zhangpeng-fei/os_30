@@ -1,0 +1,142 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	__alloca
+     7 00000000                                 	EXTERN	_api_openwin
+     8 00000000                                 	EXTERN	_api_boxfilwin
+     9 00000000                                 	EXTERN	_api_point
+    10 00000000                                 	EXTERN	_api_getkey
+    11 00000000                                 	EXTERN	_api_end
+    12 00000000                                 [FILE "sincurve.c"]
+    13                                          [SECTION .data]
+    14 00000000                                 LC0:
+    15 00000000 73 69 6E 63 75 72 76 65 00      	DB	"sincurve",0x00
+    16 00000009 00 00 00 00 00 00 00            	ALIGNB	8
+    17 00000010                                 LC1:
+    18 00000010 F01B866E                        	DD	-266631570
+    19 00000014 400921F9                        	DD	1074340345
+    20 00000018                                 	ALIGNB	8
+    21 00000018                                 LC2:
+    22 00000018 00000000                        	DD	0
+    23 0000001C 40668000                        	DD	1080459264
+    24 00000020                                 	ALIGNB	8
+    25 00000020                                 LC3:
+    26 00000020 00000000                        	DD	0
+    27 00000024 40180000                        	DD	1075314688
+    28 00000028                                 	ALIGNB	8
+    29 00000028                                 LC4:
+    30 00000028 00000000                        	DD	0
+    31 0000002C 40240000                        	DD	1076101120
+    32 00000030                                 	ALIGNB	8
+    33 00000030                                 LC5:
+    34 00000030 00000000                        	DD	0
+    35 00000034 405B8000                        	DD	1079738368
+    36 00000038                                 	ALIGNB	8
+    37 00000038                                 LC6:
+    38 00000038 00000000                        	DD	0
+    39 0000003C 40590000                        	DD	1079574528
+    40                                          [SECTION .text]
+    41 00000000                                 	GLOBAL	_HariMain
+    42 00000000                                 _HariMain:
+    43 00000000 55                              	PUSH	EBP
+    44 00000001 B8 00013898                     	MOV	EAX,80024
+    45 00000006 89 E5                           	MOV	EBP,ESP
+    46 00000008 57                              	PUSH	EDI
+    47 00000009 56                              	PUSH	ESI
+    48 0000000A 31 F6                           	XOR	ESI,ESI
+    49 0000000C 53                              	PUSH	EBX
+    50 0000000D E8 [00000000]                   	CALL	__alloca
+    51 00000012 8D 85 FFFEC774                  	LEA	EAX,DWORD [-80012+EBP]
+    52 00000018 68 [00000000]                   	PUSH	LC0
+    53 0000001D 6A FF                           	PUSH	-1
+    54 0000001F 68 000000C8                     	PUSH	200
+    55 00000024 68 000000C8                     	PUSH	200
+    56 00000029 50                              	PUSH	EAX
+    57 0000002A E8 [00000000]                   	CALL	_api_openwin
+    58 0000002F 6A 00                           	PUSH	0
+    59 00000031 68 000000C1                     	PUSH	193
+    60 00000036 89 C7                           	MOV	EDI,EAX
+    61 00000038 68 000000C1                     	PUSH	193
+    62 0000003D 6A 19                           	PUSH	25
+    63 0000003F 6A 05                           	PUSH	5
+    64 00000041 50                              	PUSH	EAX
+    65 00000042 E8 [00000000]                   	CALL	_api_boxfilwin
+    66 00000047 83 C4 2C                        	ADD	ESP,44
+    67 0000004A                                 L15:
+    68 0000004A 56                              	PUSH	ESI
+    69 0000004B B9 00000001                     	MOV	ECX,1
+    70 00000050 DB 04 24                        	FILD	DWORD [ESP]
+    71 00000053 83 C4 04                        	ADD	ESP,4
+    72 00000056 DC 0D [00000010]                	FMUL	QWORD [LC1]
+    73 0000005C DC 35 [00000018]                	FDIV	QWORD [LC2]
+    74 00000062                                 L14:
+    75 00000062 D9 C0                           	FLD	ST0
+    76 00000064 D9 C1                           	FLD	ST1
+    77 00000066 D9 FE                           	FSIN
+    78 00000068 D9 C9                           	FXCH	ST1
+    79 0000006A DC 0D [00000020]                	FMUL	QWORD [LC3]
+    80 00000070 D9 C9                           	FXCH	ST1
+    81 00000072 8D 59 01                        	LEA	EBX,DWORD [1+ECX]
+    82 00000075 D9 E0                           	FCHS
+    83 00000077 D9 C9                           	FXCH	ST1
+    84 00000079 D9 FF                           	FCOS
+    85 0000007B 53                              	PUSH	EBX
+    86 0000007C DC C9                           	FMUL	ST1,ST0
+    87 0000007E DB 04 24                        	FILD	DWORD [ESP]
+    88 00000081 D9 BD FFFEC772                  	FNSTCW	WORD [-80014+EBP]
+    89 00000087 D9 C3                           	FLD	ST3
+    90 00000089 D9 FF                           	FCOS
+    91 0000008B D9 CB                           	FXCH	ST3
+    92 0000008D D8 C9                           	FMUL	ST0,ST1
+    93 0000008F DD 05 [00000028]                	FLD	QWORD [LC4]
+    94 00000095 D9 CC                           	FXCH	ST4
+    95 00000097 DE CB                           	FMULP	ST3,ST0
+    96 00000099 66 8B 85 FFFEC772               	MOV	AX,WORD [-80014+EBP]
+    97 000000A0 89 0C 24                        	MOV	DWORD [ESP],ECX
+    98 000000A3 D8 CB                           	FMUL	ST0,ST3
+    99 000000A5 D9 CA                           	FXCH	ST2
+   100 000000A7 66 0D 0C00                      	OR	AX,3072
+   101 000000AB DE C9                           	FMULP	ST1,ST0
+   102 000000AD D9 C9                           	FXCH	ST1
+   103 000000AF DC 05 [00000030]                	FADD	QWORD [LC5]
+   104 000000B5 D9 C9                           	FXCH	ST1
+   105 000000B7 66 89 85 FFFEC770               	MOV	WORD [-80016+EBP],AX
+   106 000000BE DE CA                           	FMULP	ST2,ST0
+   107 000000C0 D9 AD FFFEC770                  	FLDCW	WORD [-80016+EBP]
+   108 000000C6 DB 9D FFFEC76C                  	FISTP	DWORD [-80020+EBP]
+   109 000000CC D9 AD FFFEC772                  	FLDCW	WORD [-80014+EBP]
+   110 000000D2 D9 BD FFFEC772                  	FNSTCW	WORD [-80014+EBP]
+   111 000000D8 DC 05 [00000038]                	FADD	QWORD [LC6]
+   112 000000DE 66 8B 85 FFFEC772               	MOV	AX,WORD [-80014+EBP]
+   113 000000E5 8B 95 FFFEC76C                  	MOV	EDX,DWORD [-80020+EBP]
+   114 000000EB 66 0D 0C00                      	OR	AX,3072
+   115 000000EF 52                              	PUSH	EDX
+   116 000000F0 66 89 85 FFFEC770               	MOV	WORD [-80016+EBP],AX
+   117 000000F7 D9 AD FFFEC770                  	FLDCW	WORD [-80016+EBP]
+   118 000000FD DB 9D FFFEC76C                  	FISTP	DWORD [-80020+EBP]
+   119 00000103 D9 AD FFFEC772                  	FLDCW	WORD [-80014+EBP]
+   120 00000109 DD 9D FFFEC75C                  	FSTP	QWORD [-80036+EBP]
+   121 0000010F 8B 85 FFFEC76C                  	MOV	EAX,DWORD [-80020+EBP]
+   122 00000115 50                              	PUSH	EAX
+   123 00000116 57                              	PUSH	EDI
+   124 00000117 E8 [00000000]                   	CALL	_api_point
+   125 0000011C 89 D9                           	MOV	ECX,EBX
+   126 0000011E 83 C4 10                        	ADD	ESP,16
+   127 00000121 83 FB 07                        	CMP	EBX,7
+   128 00000124 DD 85 FFFEC75C                  	FLD	QWORD [-80036+EBP]
+   129 0000012A 0F 8E FFFFFF32                  	JLE	L14
+   130 00000130 DD D8                           	FSTP	ST0
+   131 00000132 46                              	INC	ESI
+   132 00000133 81 FE 00000167                  	CMP	ESI,359
+   133 00000139 0F 8E FFFFFF0B                  	JLE	L15
+   134 0000013F 6A 01                           	PUSH	1
+   135 00000141 E8 [00000000]                   	CALL	_api_getkey
+   136 00000146 E8 [00000000]                   	CALL	_api_end
+   137 0000014B 8D 65 F4                        	LEA	ESP,DWORD [-12+EBP]
+   138 0000014E 5B                              	POP	EBX
+   139 0000014F 5E                              	POP	ESI
+   140 00000150 5F                              	POP	EDI
+   141 00000151 5D                              	POP	EBP
+   142 00000152 C3                              	RET

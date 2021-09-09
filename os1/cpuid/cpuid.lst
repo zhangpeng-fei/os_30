@@ -1,0 +1,377 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_initmalloc
+     7 00000000                                 	EXTERN	_api_malloc
+     8 00000000                                 	EXTERN	_api_openwin
+     9 00000000                                 	EXTERN	_api_alloctimer
+    10 00000000                                 	EXTERN	_api_inittimer
+    11 00000000                                 	EXTERN	_asm_cpuid
+    12 00000000                                 	EXTERN	_api_putstrwin
+    13 00000000                                 	EXTERN	_api_boxfilwin
+    14 00000000                                 	EXTERN	_sprintf
+    15 00000000                                 	EXTERN	_asm_rdtsc
+    16 00000000                                 	EXTERN	_api_settimer
+    17 00000000                                 	EXTERN	_api_getkey
+    18 00000000                                 	EXTERN	_api_end
+    19 00000000                                 [FILE "cpuid.c"]
+    20                                          [SECTION .data]
+    21 00000000                                 LC0:
+    22 00000000 43 72 79 73 74 61 6C 43 50 55   	DB	"CrystalCPUID for PandaOS",0x00
+       0000000A 49 44 20 66 6F 72 20 50 61 6E 
+       00000014 64 61 4F 53 00 
+    23 00000019                                 LC1:
+    24 00000019 46 61 6D 69 6C 79 20 3D 20 25   	DB	"Family = %Xh, Model = %Xh, Stepping = %Xh",0x00
+       00000023 58 68 2C 20 4D 6F 64 65 6C 20 
+       0000002D 3D 20 25 58 68 2C 20 53 74 65 
+       00000037 70 70 69 6E 67 20 3D 20 25 58 
+       00000041 68 00 
+    25 00000043                                 LC3:
+    26 00000043 43 6C 6F 63 6B 20 3D 20 25 64   	DB	"Clock = %dMHz",0x00
+       0000004D 4D 48 7A 00 
+    27 00000051                                 LC2:
+    28 00000051 46 61 6D 69 6C 79 45 78 20 3D   	DB	"FamilyEx = %Xh, ModelEx = %Xh, SteppingEx = %Xh",0x00
+       0000005B 20 25 58 68 2C 20 4D 6F 64 65 
+       00000065 6C 45 78 20 3D 20 25 58 68 2C 
+       0000006F 20 53 74 65 70 70 69 6E 67 45 
+       00000079 78 20 3D 20 25 58 68 00 
+    29                                          [SECTION .text]
+    30 00000000                                 	GLOBAL	_HariMain
+    31 00000000                                 _HariMain:
+    32 00000000 55                              	PUSH	EBP
+    33 00000001 89 E5                           	MOV	EBP,ESP
+    34 00000003 57                              	PUSH	EDI
+    35 00000004 56                              	PUSH	ESI
+    36 00000005 53                              	PUSH	EBX
+    37 00000006 81 EC 00000188                  	SUB	ESP,392
+    38 0000000C E8 [00000000]                   	CALL	_api_initmalloc
+    39 00000011 68 00017700                     	PUSH	96000
+    40 00000016 E8 [00000000]                   	CALL	_api_malloc
+    41 0000001B 68 [00000000]                   	PUSH	LC0
+    42 00000020 6A FF                           	PUSH	-1
+    43 00000022 6A 78                           	PUSH	120
+    44 00000024 68 00000190                     	PUSH	400
+    45 00000029 50                              	PUSH	EAX
+    46 0000002A E8 [00000000]                   	CALL	_api_openwin
+    47 0000002F 89 85 FFFFFE80                  	MOV	DWORD [-384+EBP],EAX
+    48 00000035 E8 [00000000]                   	CALL	_api_alloctimer
+    49 0000003A 68 00000080                     	PUSH	128
+    50 0000003F 50                              	PUSH	EAX
+    51 00000040 89 85 FFFFFE7C                  	MOV	DWORD [-388+EBP],EAX
+    52 00000046 E8 [00000000]                   	CALL	_api_inittimer
+    53 0000004B 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+    54 00000051 83 C4 20                        	ADD	ESP,32
+    55 00000054 50                              	PUSH	EAX
+    56 00000055 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+    57 0000005B 50                              	PUSH	EAX
+    58 0000005C 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+    59 00000062 50                              	PUSH	EAX
+    60 00000063 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+    61 00000069 50                              	PUSH	EAX
+    62 0000006A 6A 00                           	PUSH	0
+    63 0000006C 6A 00                           	PUSH	0
+    64 0000006E E8 [00000000]                   	CALL	_asm_cpuid
+    65 00000073 8B 85 FFFFFE98                  	MOV	EAX,DWORD [-360+EBP]
+    66 00000079 89 45 E4                        	MOV	DWORD [-28+EBP],EAX
+    67 0000007C 8B 85 FFFFFEA0                  	MOV	EAX,DWORD [-352+EBP]
+    68 00000082 89 45 E8                        	MOV	DWORD [-24+EBP],EAX
+    69 00000085 8B 85 FFFFFE9C                  	MOV	EAX,DWORD [-356+EBP]
+    70 0000008B 89 45 EC                        	MOV	DWORD [-20+EBP],EAX
+    71 0000008E 8D 45 E4                        	LEA	EAX,DWORD [-28+EBP]
+    72 00000091 50                              	PUSH	EAX
+    73 00000092 6A 0C                           	PUSH	12
+    74 00000094 6A 00                           	PUSH	0
+    75 00000096 6A 1B                           	PUSH	27
+    76 00000098 6A 0E                           	PUSH	14
+    77 0000009A FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+    78 000000A0 C6 45 F0 00                     	MOV	BYTE [-16+EBP],0
+    79 000000A4 E8 [00000000]                   	CALL	_api_putstrwin
+    80 000000A9 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+    81 000000AF 83 C4 30                        	ADD	ESP,48
+    82 000000B2 50                              	PUSH	EAX
+    83 000000B3 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+    84 000000B9 50                              	PUSH	EAX
+    85 000000BA 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+    86 000000C0 50                              	PUSH	EAX
+    87 000000C1 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+    88 000000C7 50                              	PUSH	EAX
+    89 000000C8 6A 00                           	PUSH	0
+    90 000000CA 6A 01                           	PUSH	1
+    91 000000CC E8 [00000000]                   	CALL	_asm_cpuid
+    92 000000D1 6A 0F                           	PUSH	15
+    93 000000D3 8B 9D FFFFFE94                  	MOV	EBX,DWORD [-364+EBP]
+    94 000000D9 6A 72                           	PUSH	114
+    95 000000DB 89 DF                           	MOV	EDI,EBX
+    96 000000DD 89 D8                           	MOV	EAX,EBX
+    97 000000DF C1 EF 10                        	SHR	EDI,16
+    98 000000E2 68 0000018A                     	PUSH	394
+    99 000000E7 C1 E8 08                        	SHR	EAX,8
+   100 000000EA 81 E7 00000FF0                  	AND	EDI,4080
+   101 000000F0 83 E0 0F                        	AND	EAX,15
+   102 000000F3 6A 18                           	PUSH	24
+   103 000000F5 01 C7                           	ADD	EDI,EAX
+   104 000000F7 89 DE                           	MOV	ESI,EBX
+   105 000000F9 C1 EE 0C                        	SHR	ESI,12
+   106 000000FC 89 D8                           	MOV	EAX,EBX
+   107 000000FE C1 E8 04                        	SHR	EAX,4
+   108 00000101 6A 06                           	PUSH	6
+   109 00000103 83 E0 0F                        	AND	EAX,15
+   110 00000106 81 E6 000000F0                  	AND	ESI,240
+   111 0000010C FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   112 00000112 01 C6                           	ADD	ESI,EAX
+   113 00000114 83 E3 0F                        	AND	EBX,15
+   114 00000117 E8 [00000000]                   	CALL	_api_boxfilwin
+   115 0000011C 83 C4 30                        	ADD	ESP,48
+   116 0000011F 6A 07                           	PUSH	7
+   117 00000121 6A 71                           	PUSH	113
+   118 00000123 68 00000189                     	PUSH	393
+   119 00000128 6A 19                           	PUSH	25
+   120 0000012A 6A 07                           	PUSH	7
+   121 0000012C FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   122 00000132 E8 [00000000]                   	CALL	_api_boxfilwin
+   123 00000137 53                              	PUSH	EBX
+   124 00000138 56                              	PUSH	ESI
+   125 00000139 8D B5 FFFFFEA4                  	LEA	ESI,DWORD [-348+EBP]
+   126 0000013F 57                              	PUSH	EDI
+   127 00000140 89 F7                           	MOV	EDI,ESI
+   128 00000142 68 [00000019]                   	PUSH	LC1
+   129 00000147 56                              	PUSH	ESI
+   130 00000148 E8 [00000000]                   	CALL	_sprintf
+   131 0000014D 31 C0                           	XOR	EAX,EAX
+   132 0000014F 83 C4 2C                        	ADD	ESP,44
+   133 00000152 83 C9 FF                        	OR	ECX,-1
+   134 00000155 FC                              	CLD
+   135 00000156 56                              	PUSH	ESI
+   136 00000157 F2                              	REPNE
+   137 00000158 AE                              	SCASB
+   138 00000159 F7 D1                           	NOT	ECX
+   139 0000015B 49                              	DEC	ECX
+   140 0000015C 51                              	PUSH	ECX
+   141 0000015D 6A 00                           	PUSH	0
+   142 0000015F 6A 2B                           	PUSH	43
+   143 00000161 6A 0E                           	PUSH	14
+   144 00000163 FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   145 00000169 E8 [00000000]                   	CALL	_api_putstrwin
+   146 0000016E 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+   147 00000174 50                              	PUSH	EAX
+   148 00000175 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+   149 0000017B 50                              	PUSH	EAX
+   150 0000017C 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+   151 00000182 50                              	PUSH	EAX
+   152 00000183 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+   153 00000189 50                              	PUSH	EAX
+   154 0000018A 6A 00                           	PUSH	0
+   155 0000018C 68 80000000                     	PUSH	-2147483648
+   156 00000191 E8 [00000000]                   	CALL	_asm_cpuid
+   157 00000196 83 C4 30                        	ADD	ESP,48
+   158 00000199 8B 85 FFFFFE94                  	MOV	EAX,DWORD [-364+EBP]
+   159 0000019F 89 85 FFFFFE78                  	MOV	DWORD [-392+EBP],EAX
+   160 000001A5 3D 80000000                     	CMP	EAX,-2147483648
+   161 000001AA 0F 87 00000214                  	JA	L15
+   162 000001B0                                 L2:
+   163 000001B0 81 BD FFFFFE78 80000003         	CMP	DWORD [-392+EBP],-2147483645
+   164 000001BA 0F 87 000000E7                  	JA	L16
+   165 000001C0                                 L3:
+   166 000001C0 8D 85 FFFFFE90                  	LEA	EAX,DWORD [-368+EBP]
+   167 000001C6 50                              	PUSH	EAX
+   168 000001C7 8D 85 FFFFFE8C                  	LEA	EAX,DWORD [-372+EBP]
+   169 000001CD 50                              	PUSH	EAX
+   170 000001CE E8 [00000000]                   	CALL	_asm_rdtsc
+   171 000001D3 58                              	POP	EAX
+   172 000001D4 5A                              	POP	EDX
+   173 000001D5                                 L10:
+   174 000001D5 6A 64                           	PUSH	100
+   175 000001D7 FF B5 FFFFFE7C                  	PUSH	DWORD [-388+EBP]
+   176 000001DD E8 [00000000]                   	CALL	_api_settimer
+   177 000001E2 6A 01                           	PUSH	1
+   178 000001E4 E8 [00000000]                   	CALL	_api_getkey
+   179 000001E9 83 C4 0C                        	ADD	ESP,12
+   180 000001EC 83 C0 80                        	ADD	EAX,-128
+   181 000001EF 0F 85 000000A5                  	JNE	L11
+   182 000001F5 8D 85 FFFFFE88                  	LEA	EAX,DWORD [-376+EBP]
+   183 000001FB 8D BD FFFFFEA4                  	LEA	EDI,DWORD [-348+EBP]
+   184 00000201 50                              	PUSH	EAX
+   185 00000202 8D 85 FFFFFE84                  	LEA	EAX,DWORD [-380+EBP]
+   186 00000208 50                              	PUSH	EAX
+   187 00000209 E8 [00000000]                   	CALL	_asm_rdtsc
+   188 0000020E 31 D2                           	XOR	EDX,EDX
+   189 00000210 8B 85 FFFFFE88                  	MOV	EAX,DWORD [-376+EBP]
+   190 00000216 B9 000F4240                     	MOV	ECX,1000000
+   191 0000021B 89 85 FFFFFE70                  	MOV	DWORD [-400+EBP],EAX
+   192 00000221 8B 85 FFFFFE90                  	MOV	EAX,DWORD [-368+EBP]
+   193 00000227 29 85 FFFFFE70                  	SUB	DWORD [-400+EBP],EAX
+   194 0000022D 8B 85 FFFFFE70                  	MOV	EAX,DWORD [-400+EBP]
+   195 00000233 F7 F1                           	DIV	ECX
+   196 00000235 50                              	PUSH	EAX
+   197 00000236 68 [00000043]                   	PUSH	LC3
+   198 0000023B 57                              	PUSH	EDI
+   199 0000023C E8 [00000000]                   	CALL	_sprintf
+   200 00000241 6A 08                           	PUSH	8
+   201 00000243 6A 69                           	PUSH	105
+   202 00000245 68 000000AE                     	PUSH	174
+   203 0000024A 6A 5B                           	PUSH	91
+   204 0000024C 6A 0E                           	PUSH	14
+   205 0000024E FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   206 00000254 E8 [00000000]                   	CALL	_api_boxfilwin
+   207 00000259 31 C0                           	XOR	EAX,EAX
+   208 0000025B 83 C4 2C                        	ADD	ESP,44
+   209 0000025E 83 C9 FF                        	OR	ECX,-1
+   210 00000261 FC                              	CLD
+   211 00000262 57                              	PUSH	EDI
+   212 00000263 F2                              	REPNE
+   213 00000264 AE                              	SCASB
+   214 00000265 F7 D1                           	NOT	ECX
+   215 00000267 49                              	DEC	ECX
+   216 00000268 51                              	PUSH	ECX
+   217 00000269 6A 00                           	PUSH	0
+   218 0000026B 6A 5B                           	PUSH	91
+   219 0000026D 6A 0E                           	PUSH	14
+   220 0000026F FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   221 00000275 E8 [00000000]                   	CALL	_api_putstrwin
+   222 0000027A 83 C4 18                        	ADD	ESP,24
+   223 0000027D 8B 85 FFFFFE84                  	MOV	EAX,DWORD [-380+EBP]
+   224 00000283 89 85 FFFFFE8C                  	MOV	DWORD [-372+EBP],EAX
+   225 00000289 8B 85 FFFFFE88                  	MOV	EAX,DWORD [-376+EBP]
+   226 0000028F 89 85 FFFFFE90                  	MOV	DWORD [-368+EBP],EAX
+   227 00000295 E9 FFFFFF3B                     	JMP	L10
+   228 0000029A                                 L11:
+   229 0000029A E8 [00000000]                   	CALL	_api_end
+   230 0000029F 8D 65 F4                        	LEA	ESP,DWORD [-12+EBP]
+   231 000002A2 5B                              	POP	EBX
+   232 000002A3 5E                              	POP	ESI
+   233 000002A4 5F                              	POP	EDI
+   234 000002A5 5D                              	POP	EBP
+   235 000002A6 C3                              	RET
+   236 000002A7                                 L16:
+   237 000002A7 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+   238 000002AD 50                              	PUSH	EAX
+   239 000002AE 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+   240 000002B4 50                              	PUSH	EAX
+   241 000002B5 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+   242 000002BB 50                              	PUSH	EAX
+   243 000002BC 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+   244 000002C2 50                              	PUSH	EAX
+   245 000002C3 6A 00                           	PUSH	0
+   246 000002C5 68 80000002                     	PUSH	-2147483646
+   247 000002CA E8 [00000000]                   	CALL	_asm_cpuid
+   248 000002CF 8B 85 FFFFFE94                  	MOV	EAX,DWORD [-364+EBP]
+   249 000002D5 89 45 A4                        	MOV	DWORD [-92+EBP],EAX
+   250 000002D8 8B 85 FFFFFE98                  	MOV	EAX,DWORD [-360+EBP]
+   251 000002DE 89 45 A8                        	MOV	DWORD [-88+EBP],EAX
+   252 000002E1 8B 85 FFFFFE9C                  	MOV	EAX,DWORD [-356+EBP]
+   253 000002E7 89 45 AC                        	MOV	DWORD [-84+EBP],EAX
+   254 000002EA 8B 85 FFFFFEA0                  	MOV	EAX,DWORD [-352+EBP]
+   255 000002F0 89 45 B0                        	MOV	DWORD [-80+EBP],EAX
+   256 000002F3 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+   257 000002F9 50                              	PUSH	EAX
+   258 000002FA 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+   259 00000300 50                              	PUSH	EAX
+   260 00000301 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+   261 00000307 50                              	PUSH	EAX
+   262 00000308 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+   263 0000030E 50                              	PUSH	EAX
+   264 0000030F 6A 00                           	PUSH	0
+   265 00000311 68 80000003                     	PUSH	-2147483645
+   266 00000316 E8 [00000000]                   	CALL	_asm_cpuid
+   267 0000031B 83 C4 30                        	ADD	ESP,48
+   268 0000031E 8B 85 FFFFFE94                  	MOV	EAX,DWORD [-364+EBP]
+   269 00000324 89 45 B4                        	MOV	DWORD [-76+EBP],EAX
+   270 00000327 8B 85 FFFFFE98                  	MOV	EAX,DWORD [-360+EBP]
+   271 0000032D 89 45 B8                        	MOV	DWORD [-72+EBP],EAX
+   272 00000330 8B 85 FFFFFE9C                  	MOV	EAX,DWORD [-356+EBP]
+   273 00000336 89 45 BC                        	MOV	DWORD [-68+EBP],EAX
+   274 00000339 8B 85 FFFFFEA0                  	MOV	EAX,DWORD [-352+EBP]
+   275 0000033F 89 45 C0                        	MOV	DWORD [-64+EBP],EAX
+   276 00000342 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+   277 00000348 50                              	PUSH	EAX
+   278 00000349 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+   279 0000034F 50                              	PUSH	EAX
+   280 00000350 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+   281 00000356 50                              	PUSH	EAX
+   282 00000357 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+   283 0000035D 50                              	PUSH	EAX
+   284 0000035E 6A 00                           	PUSH	0
+   285 00000360 68 80000004                     	PUSH	-2147483644
+   286 00000365 E8 [00000000]                   	CALL	_asm_cpuid
+   287 0000036A 83 C4 18                        	ADD	ESP,24
+   288 0000036D 8B 85 FFFFFE94                  	MOV	EAX,DWORD [-364+EBP]
+   289 00000373 89 45 C4                        	MOV	DWORD [-60+EBP],EAX
+   290 00000376 8B 85 FFFFFE98                  	MOV	EAX,DWORD [-360+EBP]
+   291 0000037C 89 45 C8                        	MOV	DWORD [-56+EBP],EAX
+   292 0000037F 8B 85 FFFFFE9C                  	MOV	EAX,DWORD [-356+EBP]
+   293 00000385 89 45 CC                        	MOV	DWORD [-52+EBP],EAX
+   294 00000388 8B 85 FFFFFEA0                  	MOV	EAX,DWORD [-352+EBP]
+   295 0000038E 89 45 D0                        	MOV	DWORD [-48+EBP],EAX
+   296 00000391 31 C0                           	XOR	EAX,EAX
+   297 00000393 C6 45 D5 00                     	MOV	BYTE [-43+EBP],0
+   298 00000397                                 L9:
+   299 00000397 80 7C 05 A4 20                  	CMP	BYTE [-92+EBP+EAX*1],32
+   300 0000039C 7F 06                           	JG	L5
+   301 0000039E 40                              	INC	EAX
+   302 0000039F 83 F8 30                        	CMP	EAX,48
+   303 000003A2 7E F3                           	JLE	L9
+   304 000003A4                                 L5:
+   305 000003A4 8D 44 28 A4                     	LEA	EAX,DWORD [-92+EAX+EBP*1]
+   306 000003A8 50                              	PUSH	EAX
+   307 000003A9 6A 30                           	PUSH	48
+   308 000003AB 6A 00                           	PUSH	0
+   309 000003AD 6A 4B                           	PUSH	75
+   310 000003AF 6A 0E                           	PUSH	14
+   311 000003B1 FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   312 000003B7 E8 [00000000]                   	CALL	_api_putstrwin
+   313 000003BC 83 C4 18                        	ADD	ESP,24
+   314 000003BF E9 FFFFFDFC                     	JMP	L3
+   315 000003C4                                 L15:
+   316 000003C4 8D 85 FFFFFEA0                  	LEA	EAX,DWORD [-352+EBP]
+   317 000003CA 89 F7                           	MOV	EDI,ESI
+   318 000003CC 50                              	PUSH	EAX
+   319 000003CD 8D 85 FFFFFE9C                  	LEA	EAX,DWORD [-356+EBP]
+   320 000003D3 50                              	PUSH	EAX
+   321 000003D4 8D 85 FFFFFE98                  	LEA	EAX,DWORD [-360+EBP]
+   322 000003DA 50                              	PUSH	EAX
+   323 000003DB 8D 85 FFFFFE94                  	LEA	EAX,DWORD [-364+EBP]
+   324 000003E1 50                              	PUSH	EAX
+   325 000003E2 6A 00                           	PUSH	0
+   326 000003E4 68 80000001                     	PUSH	-2147483647
+   327 000003E9 E8 [00000000]                   	CALL	_asm_cpuid
+   328 000003EE 8B 85 FFFFFE94                  	MOV	EAX,DWORD [-364+EBP]
+   329 000003F4 89 C3                           	MOV	EBX,EAX
+   330 000003F6 89 85 FFFFFE74                  	MOV	DWORD [-396+EBP],EAX
+   331 000003FC C1 EB 10                        	SHR	EBX,16
+   332 000003FF 8B 8D FFFFFE74                  	MOV	ECX,DWORD [-396+EBP]
+   333 00000405 C1 E8 08                        	SHR	EAX,8
+   334 00000408 81 E3 00000FF0                  	AND	EBX,4080
+   335 0000040E C1 E9 0C                        	SHR	ECX,12
+   336 00000411 83 E0 0F                        	AND	EAX,15
+   337 00000414 01 C3                           	ADD	EBX,EAX
+   338 00000416 81 E1 000000F0                  	AND	ECX,240
+   339 0000041C 8B 85 FFFFFE74                  	MOV	EAX,DWORD [-396+EBP]
+   340 00000422 83 A5 FFFFFE74 0F               	AND	DWORD [-396+EBP],15
+   341 00000429 C1 E8 04                        	SHR	EAX,4
+   342 0000042C 83 E0 0F                        	AND	EAX,15
+   343 0000042F FF B5 FFFFFE74                  	PUSH	DWORD [-396+EBP]
+   344 00000435 01 C1                           	ADD	ECX,EAX
+   345 00000437 51                              	PUSH	ECX
+   346 00000438 53                              	PUSH	EBX
+   347 00000439 68 [00000051]                   	PUSH	LC2
+   348 0000043E 56                              	PUSH	ESI
+   349 0000043F E8 [00000000]                   	CALL	_sprintf
+   350 00000444 31 C0                           	XOR	EAX,EAX
+   351 00000446 83 C4 2C                        	ADD	ESP,44
+   352 00000449 83 C9 FF                        	OR	ECX,-1
+   353 0000044C FC                              	CLD
+   354 0000044D 56                              	PUSH	ESI
+   355 0000044E F2                              	REPNE
+   356 0000044F AE                              	SCASB
+   357 00000450 F7 D1                           	NOT	ECX
+   358 00000452 49                              	DEC	ECX
+   359 00000453 51                              	PUSH	ECX
+   360 00000454 6A 00                           	PUSH	0
+   361 00000456 6A 3B                           	PUSH	59
+   362 00000458 6A 0E                           	PUSH	14
+   363 0000045A FF B5 FFFFFE80                  	PUSH	DWORD [-384+EBP]
+   364 00000460 E8 [00000000]                   	CALL	_api_putstrwin
+   365 00000465 83 C4 18                        	ADD	ESP,24
+   366 00000468 E9 FFFFFD43                     	JMP	L2
